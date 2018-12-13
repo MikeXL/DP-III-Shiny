@@ -8,41 +8,51 @@ autosize: true
 transition: none
 css: pres.style.css
 
-First Slide
+The Idea
 ========================================================
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
-
-- Bullet 1
-- Bullet 2
-- Bullet 3
+The goal is to build an shiny app that user could interact with it. 
+The idea is to create an playground for user model neural net interactively.
 
 
 
-Slide 2
+The Model
 ========================================================
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(cars)
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+library(nnet)
+# input$num_neurons
+m <- nnet(Species ~ Sepal.Length + Sepal.Width, data=iris, size=12)
+pred <- predict(m, iris, type="class")
+```
+```{r echo=F}
+cat("model: Species ~ Sepal.Length + Sepal.Width")
+m
 ```
 
-Slide 3
-========================================================
 
-```{r cars, echo=FALSE}
-plot(cars)
+How well the model did?
+========================================================
+With default settings, number of neurons = 12  
+The Confusion Matrix
+```{r cm, echo=FALSE}
+table(pred, iris$Species)
 ```
 
-Slide 4
+Discussions and future work
 ========================================================
 
-```{r another car, echo=FALSE}
-plot(cars)
-```
+So we have fit an vanilla nnet with capability of user interaction for one hyperparameter, number of neurons. 
 
-Slide 5
+In the future, we would like to make this more interactive on other hyperparameters such as learning rate, selection of loss functions and optimizers.
+
+Resources
 ========================================================
 
-```{r yet another car, echo=FALSE}
-plot(cars)
-```
+1. [Github Repo][1] that hosts _server.R_ and _ui.R_
+2. [Shiny App][2] hosted on _shinyapp.io_
+3. [This slides][3] hosted on _rpubs_
+
+[1]: https://github.com/MikeXL/DP-III-Shiny-Pres
+[2]: https://mike.shinyapps.io/DP-III-Shiny/
+[3]: http://rpubs.com/mike/dp3
