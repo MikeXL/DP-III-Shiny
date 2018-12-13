@@ -2,19 +2,23 @@
 #
 
 library(shiny)
+library(nnet)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
-  output$distPlot <- renderPlot({
+  output$predPlot <- renderPlot({
     
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2] 
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    # fit neural net
+    m <- nnet(Species ~ Sepal.Length + Sepal.Width, data=iris, size=input$num_neurons)
+    pred <- predict(m, iris, type="class")
     
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+    
+    # draw scatter plot for validation
+    plot(iris$Sepal.Length, iris$Sepal.Width, col=as.integer(iris$Species)+10, pch=as.integer(factor(pred)), frame=F, axes=F, xlab="Sepal Length", ylab="Sepal Width")
+    legend("topright", legend=c("setosa", "versicolor", "virginica"), col=c(11,12,13), pch=c(1,2,3), bty="n")
     
   })
+  
   
 })
