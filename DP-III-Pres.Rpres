@@ -2,7 +2,10 @@ A shiny app that
 ========================================================
 author: M. Liu
 date: 13th December, 2018
+font-family: 'Helvetica'
 autosize: true
+transition: none
+css: custom.css
 
 First Slide
 ========================================================
