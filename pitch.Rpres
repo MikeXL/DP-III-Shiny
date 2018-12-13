@@ -5,7 +5,7 @@ date: 13th December, 2018
 font-family: 'Helvetica'
 autosize: true
 transition: none
-css: custom.css
+css: pres.style.css
 
 First Slide
 ========================================================
